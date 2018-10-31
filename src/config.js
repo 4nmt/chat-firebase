@@ -1,7 +1,12 @@
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/auth";
+import "firebase/storage";
+
 export const env = "development";
 
 // Config from Firebase Console
-export const firebase = {
+export const FirebaseConfig = {
   apiKey: "AIzaSyA0OXVWBo3AEjp6qgGb5v8jhmV68kp8v3I",
   authDomain: "chat-react-659b2.firebaseapp.com",
   databaseURL: "https://chat-react-659b2.firebaseio.com",
@@ -15,5 +20,10 @@ export const firebase = {
 export const reduxFirebase = {
   userProfile: "users" // root that user profiles are written to
 };
+
+firebase.initializeApp(FirebaseConfig);
+
+export const authRef = firebase.auth();
+export const provider = new firebase.auth.GoogleAuthProvider();
 
 export default { env, firebase, reduxFirebase };

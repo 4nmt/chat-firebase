@@ -1,15 +1,15 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "../reducers";
 import thunk from "redux-thunk";
-import {
-  reactReduxFirebase,
-  getFirebase,
-  firebase
-} from "react-redux-firebase";
-import { firebase as fbConfig, reduxFirebase as rrfConfig } from "../config";
+import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
+import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 import "firebase/storage";
+import {
+  FirebaseConfig as fbConfig,
+  reduxFirebase as rrfConfig
+} from "../config";
 
 export default (initialState = {}) => {
   const middleware = [
@@ -25,7 +25,7 @@ export default (initialState = {}) => {
   //     }
   // }
 
-  firebase.initializeApp(fbConfig);
+  // firebase.initializeApp(fbConfig);
 
   const store = createStore(
     rootReducer,
