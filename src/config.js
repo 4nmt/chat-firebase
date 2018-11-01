@@ -21,9 +21,4 @@ export const reduxFirebase = {
   userProfile: "users" // root that user profiles are written to
 };
 
-firebase.initializeApp(FirebaseConfig);
-
-export const authRef = firebase.auth();
-export const provider = new firebase.auth.GoogleAuthProvider();
-
 export default { env, firebase, reduxFirebase };

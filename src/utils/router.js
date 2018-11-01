@@ -17,14 +17,16 @@ const locationHelper = locationHelperBuilder({});
 export const UserIsAuthenticated = connectedRouterRedirect({
   wrapperDisplayName: "UserIsAuthenticated",
   AuthenticatingComponent: LoadingSpinner,
-
+  allowRedirectBack: true,
   redirectPath: (state, ownProps) =>
-    locationHelper.getRedirectQueryParam(ownProps) || "/home",
+    locationHelper.getRedirectQueryParam(ownProps) || "/",
   authenticatingSelector: ({ firebase: { auth, isInitializing } }) =>
     !auth.isLoaded || isInitializing,
   authenticatedSelector: ({ firebase: { auth } }) =>
     auth.isLoaded && !auth.isEmpty,
   redirectAction: newLoc => dispatch => {
+    alert("dasds");
+    history.replace(newLoc);
     dispatch({
       type: UNAUTHED_REDIRECT,
       payload: { message: "User is not authenticated." }
@@ -42,16 +44,15 @@ export const UserIsAuthenticated = connectedRouterRedirect({
  */
 export const UserIsNotAuthenticated = connectedRouterRedirect({
   wrapperDisplayName: "UserIsAuthenticated",
+  AuthenticatingComponent: LoadingSpinner,
   allowRedirectBack: false,
   redirectPath: (state, ownProps) =>
-    locationHelper.getRedirectQueryParam(ownProps) || "/home",
+    locationHelper.getRedirectQueryParam(ownProps) || "/dashboard",
   authenticatingSelector: ({ firebase: { auth, isInitializing } }) =>
-    !auth.isLoaded || isInitializing,
+    !auth.isLoaded || isInitializing === true,
   authenticatedSelector: ({ firebase: { auth } }) =>
     auth.isLoaded && auth.isEmpty,
   redirectAction: newLoc => dispatch => {
-    alert("dasds");
-
     history.replace(newLoc);
     dispatch({
       type: AUTHED_REDIRECT

@@ -1,28 +1,26 @@
 import React from "react";
 import { Field } from "redux-form";
-import { TextField } from "redux-form-material-ui";
 import Button from "@material-ui/core/Button";
-import GoogleButton from "react-google-button";
+import TextField from "@material-ui/core/TextField";
 
-export const LoginForm = () => (
-  <form>
-    {/* <Field name="email" component={TextField} label="Email" />
-    <Field
-      name="password"
-      component={TextField}
-      label="Password"
-      type="password"
-    />
+export const LoginForm = ({ handleSubmit, pristine, reset, submitting }) => (
+  <form onSubmit={handleSubmit}>
+    <div>
+      <Field name="email" component={TextField} label="Email" />
+    </div>
+    <div>
+      <Field
+        name="password"
+        component={TextField}
+        label="Password"
+        type="password"
+      />
+    </div>
     <div>
       <Button color="primary" type="submit" raised>
-        "Login"
+        Login
       </Button>
-    </div> */}
-    {/* <GoogleButton
-      onClick={() => {
-        console.log("Google button clicked");
-      }}
-    /> */}
+    </div>{" "}
   </form>
 );
 

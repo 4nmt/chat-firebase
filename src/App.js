@@ -6,23 +6,22 @@ import { Provider } from "react-redux";
 import ThemeSettings from "./theme";
 import history from "./browserHistory";
 import LoginPageComponent from "./components/Login/LoginPage";
-import Signin from "./containers";
 
 import HomePageComponent from "./components/Home";
 
-const theme = createMuiTheme(ThemeSettings);
+const muiTheme = createMuiTheme(ThemeSettings);
 
 const App = ({ store }) => (
-  <MuiThemeProvider theme={theme}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={muiTheme}>
       <Router history={history}>
         <div>
           <Route path="/" exact component={LoginPageComponent} />
-          <Route path="/home" exact component={HomePageComponent} />
+          <Route path="/dashboard" component={HomePageComponent} />
         </div>
       </Router>
-    </Provider>
-  </MuiThemeProvider>
+    </MuiThemeProvider>
+  </Provider>
 );
 
 App.PropTypes = {

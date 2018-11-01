@@ -13,7 +13,7 @@ import {
 
 export default (initialState = {}) => {
   const middleware = [
-    thunk.withExtraArgument(getFirebase)
+    //thunk.withExtraArgument(getFirebase)
     // This is where you add other middleware like redux-observable
   ];
 
@@ -25,11 +25,10 @@ export default (initialState = {}) => {
   //     }
   // }
 
-  // firebase.initializeApp(fbConfig);
+  firebase.initializeApp(fbConfig);
 
   const store = createStore(
     rootReducer,
-    initialState,
     compose(
       applyMiddleware(...middleware),
       reactReduxFirebase(firebase, rrfConfig),
