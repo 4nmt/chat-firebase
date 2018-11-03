@@ -1,0 +1,44 @@
+$green: #86bb71;
+$blue: #94c2ed;
+$orange: #e38968;
+$gray: #92959e;
+
+.chat-header {
+  padding: 20px;
+  border-bottom: 2px solid white;
+
+  img {
+    float: left;
+  }
+
+  .chat-about {
+    float: left;
+    padding-left: 10px;
+    margin-top: 6px;
+  }
+
+  .chat-with {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .chat-num-messages {
+    color: $gray;
+  }
+
+  .fa-star {
+    float: right;
+    color: #d8dadf;
+    font-size: 20px;
+    margin-top: 12px;
+  }
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}

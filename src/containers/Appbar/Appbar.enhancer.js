@@ -1,17 +1,7 @@
 import { connect } from "react-redux";
-import {
-  withHandlers,
-  compose,
-  withProps,
-  flattenProp,
-  withStateHandlers
-} from "recompose";
+import { withHandlers, compose, withProps } from "recompose";
 import { withFirebase, isEmpty, isLoaded } from "react-redux-firebase";
-import { ACCOUNT_PATH } from "constants";
 import { withRouter } from "react-router";
-// import history from "../../browserHistory";
-
-// import { withRouter } from "../../utils/component";
 
 export default compose(
   connect(({ firebase: { auth, profile } }) => ({
@@ -39,12 +29,9 @@ export default compose(
   withFirebase,
   // Handlers
   withHandlers({
-    handleLogout: props => () => {
-      props.firebase.logout();
-
-      props.router.push("/");
-
-      //props.closeAccountMenu();
+    handleLogout: props => async () => {
+      await props.firebase.logout();
+      props.history.push("/");
     }
     //   goToAccount: props => () => {
     //     props.router.push("/");

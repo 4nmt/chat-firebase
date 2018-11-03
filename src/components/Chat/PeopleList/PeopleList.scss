@@ -1,0 +1,57 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400);
+
+$green: #86bb71;
+$blue: #94c2ed;
+$orange: #e38968;
+$gray: #92959e;
+
+.people-list {
+  width: 260px;
+  float: left;
+
+  .search {
+    padding: 20px;
+  }
+
+  input {
+    border-radius: 3px;
+    border: none;
+    padding: 14px;
+    color: white;
+    background: #6a6c75;
+    width: 90%;
+    font-size: 14px;
+  }
+
+  .fa-search {
+    position: relative;
+    left: -25px;
+  }
+
+  ul {
+    padding: 20px;
+    height: 770px;
+    list-style-type: none;
+    li {
+      padding-bottom: 20px;
+    }
+  }
+
+  img {
+    float: left;
+    width: 30px;
+  }
+
+  .about {
+    float: left;
+    margin-top: 8px;
+  }
+
+  .about {
+    padding-left: 8px;
+  }
+
+  .status {
+    color: $gray;
+  }
+}

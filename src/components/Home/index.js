@@ -1,6 +1,4 @@
-import React from "react";
-import Appbar from "../../containers/Appbar";
+import HomePage from "./Home";
+import enhance from "./Home.enhancer";
 
-export const HomePage = () => <Appbar />;
-
-export default HomePage;
+export default enhance(HomePage);

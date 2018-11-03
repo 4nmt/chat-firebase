@@ -1,0 +1,51 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400);
+
+$green: #86bb71;
+$blue: #94c2ed;
+$orange: #e38968;
+$gray: #92959e;
+
+.chat-message {
+  padding: 30px;
+
+  textarea {
+    width: 100%;
+    border: none;
+    padding: 10px 20px;
+    font: 14px/22px "Lato", Arial, sans-serif;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    resize: none;
+  }
+
+  .fa-file-o,
+  .fa-file-image-o {
+    font-size: 16px;
+    color: gray;
+    cursor: pointer;
+  }
+
+  button {
+    float: right;
+    color: $blue;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background: #f2f5f8;
+
+    &:hover {
+      color: darken($blue, 7%);
+    }
+  }
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}

@@ -1,3 +1,4 @@
+import React, { Component } from "react";
 import { connectedRouterRedirect } from "redux-auth-wrapper/history4/redirect";
 import locationHelperBuilder from "redux-auth-wrapper/history4/locationHelper";
 import history from "../browserHistory";
@@ -14,25 +15,25 @@ const locationHelper = locationHelperBuilder({});
  * @param {Component} componentToWrap - Component to wrap
  * @return {Component} wrappedComponent
  */
-export const UserIsAuthenticated = connectedRouterRedirect({
-  wrapperDisplayName: "UserIsAuthenticated",
-  AuthenticatingComponent: LoadingSpinner,
-  allowRedirectBack: true,
-  redirectPath: (state, ownProps) =>
-    locationHelper.getRedirectQueryParam(ownProps) || "/",
-  authenticatingSelector: ({ firebase: { auth, isInitializing } }) =>
-    !auth.isLoaded || isInitializing,
-  authenticatedSelector: ({ firebase: { auth } }) =>
-    auth.isLoaded && !auth.isEmpty,
-  redirectAction: newLoc => dispatch => {
-    alert("dasds");
-    history.replace(newLoc);
-    dispatch({
-      type: UNAUTHED_REDIRECT,
-      payload: { message: "User is not authenticated." }
-    });
-  }
-});
+// export const UserIsAuthenticated = connectedRouterRedirect({
+//   wrapperDisplayName: "UserIsAuthenticated",
+//   AuthenticatingComponent: LoadingSpinner,
+//   allowRedirectBack: true,
+//   redirectPath: (state, ownProps) =>
+//     locationHelper.getRedirectQueryParam(ownProps) || "/",
+//   authenticatingSelector: ({ firebase: { auth, isInitializing } }) =>
+//     !auth.isLoaded || isInitializing,
+//   authenticatedSelector: ({ firebase: { auth } }) =>
+//     auth.isLoaded && !auth.isEmpty,
+//   redirectAction: newLoc => dispatch => {
+//     alert("dasds");
+//     history.replace(newLoc);
+//     dispatch({
+//       type: UNAUTHED_REDIRECT,
+//       payload: { message: "User is not authenticated." }
+//     });
+//   }
+// });
 
 /**
  * @description Higher Order Component that redirects to listings page or most
