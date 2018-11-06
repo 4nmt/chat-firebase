@@ -83,7 +83,7 @@ class NavBar extends React.Component {
                   <img
                     src={auth.photoURL}
                     alt={auth.displayName}
-                    style={{ width: "30px" }}
+                    style={{ width: "40px", borderRadius: "50%" }}
                   />
                 ) : (
                   <AccountCircle />

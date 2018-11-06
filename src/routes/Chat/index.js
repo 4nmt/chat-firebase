@@ -15,7 +15,7 @@ class Chat extends Component {
     console.log(this.props[0]);
 
     return (
-      <div>
+      <div className="wrapper">
         <div className="container clearfix">
           <PeopleList {...this.props[0]} />
           <div className="chat">

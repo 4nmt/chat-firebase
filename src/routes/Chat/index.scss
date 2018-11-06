@@ -14,19 +14,25 @@ $gray: #92959e;
 body {
   background: #c5ddeb;
   font: 14px/20px "Lato", Arial, sans-serif;
-  padding: 40px 0;
   color: white;
 }
 
 .container {
   margin: 0 auto;
-  width: 780px;
+  padding: 0;
+  width: 960px;
   background: #444753;
   border-radius: 5px;
 }
 
+.wrapper {
+  background: #673ab7;
+  border-radius: 5px;
+  padding: 20px;
+}
+
 .people-list {
-  width: 260px;
+  width: 300px;
   float: left;
 
   .search {
@@ -49,8 +55,8 @@ body {
   }
 
   ul {
-    padding: 20px;
-    height: 770px;
+    // padding: 20px;
+    // height: 770px;
 
     li {
       padding-bottom: 20px;
@@ -58,16 +64,16 @@ body {
   }
 
   img {
+    border-radius: 50%;
     float: left;
   }
 
   .about {
     float: left;
-    margin-top: 8px;
   }
 
   .about {
-    padding-left: 8px;
+    padding-left: 15px;
   }
 
   .status {
@@ -76,12 +82,12 @@ body {
 }
 
 .chat {
-  width: 490px;
+  width: 660px;
   float: left;
   background: #f2f5f8;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-
+  margin: 0;
   color: #434651;
 
   .chat-header {
@@ -89,6 +95,7 @@ body {
     border-bottom: 2px solid white;
 
     img {
+      border-radius: 50%;
       float: left;
     }
 

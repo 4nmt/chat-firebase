@@ -29,8 +29,8 @@ $gray: #92959e;
   }
 
   ul {
-    padding: 20px;
-    height: 770px;
+    // padding: 20px;
+    // height: 770px;
     list-style-type: none;
     li {
       padding-bottom: 20px;
@@ -38,6 +38,7 @@ $gray: #92959e;
   }
 
   img {
+    border-radius: 50%;
     float: left;
     width: 40px;
   }

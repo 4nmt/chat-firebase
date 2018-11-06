@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import ThemeSettings from "./theme";
 import history from "./browserHistory";
 import LoginPageComponent from "./components/Login/LoginPage";
-
 import HomePageComponent from "./components/Home";
 
 const muiTheme = createMuiTheme(ThemeSettings);
@@ -15,10 +14,10 @@ const App = ({ store }) => (
   <Provider store={store}>
     <MuiThemeProvider theme={muiTheme}>
       <Router history={history}>
-        <div>
+        <React.Fragment>
           <Route path="/" exact component={LoginPageComponent} />
           <Route path="/dashboard" component={HomePageComponent} />
-        </div>
+        </React.Fragment>
       </Router>
     </MuiThemeProvider>
   </Provider>

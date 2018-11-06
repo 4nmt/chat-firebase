@@ -1,15 +1,15 @@
 import React from "react";
 import Appbar from "../../containers/Appbar";
 import Chat from "../Chat";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
-export const HomePage = (...props) => {
-  console.log(props[0].setOnlineStatus());
-
+const HomePage = (...props) => {
   return (
-    <div>
+    <React.Fragment>
+      <CssBaseline />
       <Appbar />
       <Chat {...props} />
-    </div>
+    </React.Fragment>
   );
 };
 
