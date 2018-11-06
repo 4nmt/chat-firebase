@@ -12,16 +12,16 @@ class Chat extends Component {
     if (!isLoaded(users)) {
       return <div>Loading...</div>;
     }
-    console.log(users);
+    console.log(this.props[0]);
 
     return (
       <div>
         <div className="container clearfix">
           <PeopleList {...this.props[0]} />
           <div className="chat">
-            <ChatHeader />
-            <ChatHistory />
-            <ChatMessage />
+            <ChatHeader {...this.props[0]} />
+            <ChatHistory {...this.props[0]} />
+            <ChatMessage {...this.props[0]} />
           </div>
         </div>
       </div>

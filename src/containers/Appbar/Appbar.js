@@ -46,7 +46,7 @@ class NavBar extends React.Component {
 
   render() {
     const { classes, auth, handleLogout } = this.props;
-    console.log(this.props);
+    // console.log(this.props);
 
     const { anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);

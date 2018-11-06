@@ -13,7 +13,7 @@ const muiTheme = createMuiTheme(ThemeSettings);
 
 const App = ({ store }) => (
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={muiTheme}>
+    <MuiThemeProvider theme={muiTheme}>
       <Router history={history}>
         <div>
           <Route path="/" exact component={LoginPageComponent} />

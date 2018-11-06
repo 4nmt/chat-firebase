@@ -17,7 +17,7 @@ export const LoginForm = ({ handleSubmit, pristine, reset, submitting }) => (
       />
     </div>
     <div>
-      <Button color="primary" type="submit" raised>
+      <Button color="primary" type="submit" raised="true">
         Login
       </Button>
     </div>{" "}

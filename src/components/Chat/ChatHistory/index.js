@@ -3,74 +3,50 @@ import "./ChatHistory.scss";
 
 class ChatHistory extends Component {
   render() {
+    let { messages, auth, users, yourUID } = this.props;
+    if (!messages) return <div>Loading...</div>;
+    if (yourUID === "") return <div />;
+    const yourUser = users.find(val => val.key === yourUID);
+    const messageAuth = messages.find(val => val.key === auth.uid);
+    if (!messageAuth || !messageAuth.value[yourUID]) return <div />;
+
+    const messageList = Object.values(messageAuth.value[yourUID]);
+
+    let ChatList = messageList.map((msgDetails, i) => {
+      if (msgDetails.from === auth.uid) {
+        return (
+          <li className="clearfix">
+            <div className="message-data align-right">
+              <span className="message-data-time">10:10 AM, Today</span> &nbsp;
+              &nbsp;
+              <span className="message-data-name">{auth.displayName}</span>{" "}
+              <i className="fa fa-circle me" />
+            </div>
+            <div className="message other-message float-right">
+              {msgDetails.message}
+            </div>
+          </li>
+        );
+      } else {
+        return (
+          <li>
+            <div className="message-data">
+              <span className="message-data-name">
+                <i className="fa fa-circle online" />{" "}
+                {yourUser.value.displayName}
+              </span>
+              <span className="message-data-time">10:12 AM, Today</span>
+            </div>
+            <div className="message my-message">{msgDetails.message}</div>
+          </li>
+        );
+      }
+    });
+
     return (
       <div>
         <div className="chat-history">
-          <ul>
-            <li className="clearfix">
-              <div className="message-data align-right">
-                <span className="message-data-time">10:10 AM, Today</span>{" "}
-                &nbsp; &nbsp;
-                <span className="message-data-name">Olia</span>{" "}
-                <i className="fa fa-circle me" />
-              </div>
-              <div className="message other-message float-right">
-                Hi Vincent, how are you? How is the project coming along?
-              </div>
-            </li>
-
-            <li>
-              <div className="message-data">
-                <span className="message-data-name">
-                  <i className="fa fa-circle online" /> Vincent
-                </span>
-                <span className="message-data-time">10:12 AM, Today</span>
-              </div>
-              <div className="message my-message">
-                Are we meeting today? Project has been already finished and I
-                have results to show you.
-              </div>
-            </li>
-
-            <li className="clearfix">
-              <div className="message-data align-right">
-                <span className="message-data-time">10:14 AM, Today</span>{" "}
-                &nbsp; &nbsp;
-                <span className="message-data-name">Olia</span>{" "}
-                <i className="fa fa-circle me" />
-              </div>
-              <div className="message other-message float-right">
-                Well I am not sure. The rest of the team is not here yet. Maybe
-                in an hour or so? Have you faced any problems at the last phase
-                of the project?
-              </div>
-            </li>
-
-            <li>
-              <div className="message-data">
-                <span className="message-data-name">
-                  <i className="fa fa-circle online" /> Vincent
-                </span>
-                <span className="message-data-time">10:20 AM, Today</span>
-              </div>
-              <div className="message my-message">
-                Actually everything was fine. I'm very excited to show this to
-                our team.
-              </div>
-            </li>
-
-            <li>
-              <div className="message-data">
-                <span className="message-data-name">
-                  <i className="fa fa-circle online" /> Vincent
-                </span>
-                <span className="message-data-time">10:31 AM, Today</span>
-              </div>
-              <i className="fa fa-circle online" />
-              <i className="fa fa-circle online" style={{ color: "#AED2A6" }} />
-              <i className="fa fa-circle online" style={{ color: "#DAE9DA" }} />
-            </li>
-          </ul>
+          <ul>{ChatList}</ul>
         </div>
       </div>
     );

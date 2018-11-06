@@ -31,6 +31,10 @@ export default compose(
   withHandlers({
     handleLogout: props => async () => {
       await props.firebase.logout();
+      props.firebase.set(
+        `/users/${props.auth.uid}/leftTime`,
+        new Date().getTime()
+      );
       props.history.push("/");
     }
     //   goToAccount: props => () => {
