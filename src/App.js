@@ -5,8 +5,8 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 import ThemeSettings from "./theme";
 import history from "./browserHistory";
-import LoginPageComponent from "./components/Login/LoginPage";
-import HomePageComponent from "./components/Home";
+import LoginPageComponent from "./routes/Login/LoginPage";
+import HomePageComponent from "./routes/Home";
 
 const muiTheme = createMuiTheme(ThemeSettings);
 

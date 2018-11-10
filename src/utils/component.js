@@ -1,5 +1,5 @@
 import { branch, renderComponent } from "recompose";
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingSpinner from "../routes/LoadingSpinner";
 import { isLoaded } from "react-redux-firebase";
 import { get, some } from "lodash";
 

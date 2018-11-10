@@ -7,6 +7,8 @@
 - When click in a person that will display a interface allows to watch the chat history & chat with that person ( 4 points)
 - Up host firebase ( 2 points )
 
+My github: https://github.com/4nmt/chat-firebase
+
 ###
 
     Host: https://chat-react-659b2.firebaseapp.com/
