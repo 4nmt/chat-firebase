@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import "./ChatHistory.scss";
+// import "./ChatHistory.scss";
+import "../index.scss";
 
 class ChatHistory extends Component {
   render() {
     let { messages, auth, users, yourUID } = this.props;
     if (!messages) return <div>Loading...</div>;
-    if (yourUID === "") return <div />;
+    if (yourUID === "") return <div className="chat-history" />;
     const yourUser = users.find(val => val.key === yourUID);
     const messageAuth = messages.find(val => val.key === auth.uid);
-    if (!messageAuth || !messageAuth.value[yourUID]) return <div />;
+    if (!messageAuth || !messageAuth.value[yourUID])
+      return <div className="chat-history" />;
 
     const messageList = Object.values(messageAuth.value[yourUID]);
 
@@ -44,10 +46,8 @@ class ChatHistory extends Component {
     });
 
     return (
-      <div>
-        <div className="chat-history">
-          <ul>{ChatList}</ul>
-        </div>
+      <div className="chat-history">
+        <ul>{ChatList}</ul>
       </div>
     );
   }

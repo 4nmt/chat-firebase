@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./ChatMessage.scss";
+import "../index.scss";
 
 const ChatMessage = ({ sendMessages }) => {
   let input = "";

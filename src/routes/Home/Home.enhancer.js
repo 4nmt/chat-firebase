@@ -1,25 +1,52 @@
-import { withHandlers, withStateHandlers, pure, compose } from "recompose";
+import { withHandlers, withStateHandlers, compose, withProps } from "recompose";
 import { firebaseConnect } from "react-redux-firebase";
 import { connect } from "react-redux";
 import { spinnerWhileLoading } from "../../utils/component";
 
 export default compose(
-  firebaseConnect(["users", "messages"]),
-  connect(({ firebase: { auth, ordered } }) => ({
-    users: ordered.users,
-    messages: ordered.messages,
-    auth
+  firebaseConnect(["users", "messages", "stars"]),
+  connect(({ firebase: { auth, ordered } }) => {
+    return {
+      users: ordered.users,
+      messages: ordered.messages,
+      stars: ordered.stars,
+      auth
+    };
+  }),
+  spinnerWhileLoading(["users", "messages", "stars", "auth"]),
+  withProps(({ users, auth }) => ({
+    users: users
+      .filter(user => user.key !== auth.uid)
+      .sort((a, b) => b.value.closestChatTime - a.value.closestChatTime)
   })),
-  spinnerWhileLoading(["users", "messages", "auth"]),
+
   withStateHandlers(
     // Setup initial state
-    ({ initYourUID = "ZlA4zHLl62Ud2EgtxsTJffNZTkt1" }) => ({
-      yourUID: initYourUID
-    }),
+    ({ initYourUID = "", users, iconStatus = false }) => {
+      if (users[0].key) initYourUID = users[0].key;
+      return {
+        yourUID: initYourUID,
+        filterUsers: users,
+        iconStatus: iconStatus
+      };
+    },
     {
-      startChat: ({ yourUID }) => value => ({
-        yourUID: value
-      })
+      startChat: ({ yourUID }) => (yourUID, iconStatus) => ({
+        yourUID: yourUID,
+        iconStatus: iconStatus
+      }),
+      searchUsers: ({ filterUsers }) => (users, name) => {
+        return {
+          filterUsers: users.filter(user =>
+            user.value.displayName.toLowerCase().includes(name.toLowerCase())
+          )
+        };
+      }
+      // starUsers: ({ iconStatus }) => (iconStatus, yourUID) => {
+      //   return {
+      //     iconStatus: iconStatus
+      //   };
+      // }
     }
   ),
   withHandlers({
@@ -41,6 +68,27 @@ export default compose(
       );
     },
 
+    starUsers: props => (iconStatus, yourUID) => {
+      let isExist = false;
+      props.stars.forEach(star => {
+        if (star.key === yourUID) {
+          Object.keys(star.value).forEach(key => {
+            props.firebase.update(`/stars/${yourUID}/${key}/`, {
+              from: props.auth.uid,
+              iconStatus: iconStatus
+            });
+          });
+          isExist = true;
+        }
+      });
+      if (!isExist) {
+        props.firebase.push(`/stars/${yourUID}/`, {
+          from: props.auth.uid,
+          iconStatus: iconStatus
+        });
+      }
+    },
+
     setOnlineStatus: props => () => {
       console.log(props);
       let currentTime = new Date();
@@ -48,34 +96,31 @@ export default compose(
       const miliSecondOfDay = 24 * 60 * 60 * 1000;
       const miliSecondOfHour = 60 * 60 * 1000;
       const miliSecondOfMinute = 60 * 1000;
+      props.firebase.set(`/users/${props.auth.uid}/online`, "online");
 
       props.users.forEach(user => {
         let leftStatus = "";
 
-        if (user.key === props.auth.uid) {
-          props.firebase.set(`/users/${props.auth.uid}/online`, "online");
-        } else {
-          let leftTime = Math.abs(currentTime.getTime() - user.value.leftTime);
-          let diffTime = Math.ceil(leftTime / miliSecondOfMinute);
+        let leftTime = Math.abs(currentTime.getTime() - user.value.leftTime);
+        let diffTime = Math.ceil(leftTime / miliSecondOfMinute);
 
-          if (diffTime < 60) {
-            leftStatus = `left ${diffTime} minutes ago`;
+        if (diffTime < 60) {
+          leftStatus = `left ${diffTime} minutes ago`;
+        } else {
+          let diffTime = Math.ceil(leftTime / miliSecondOfHour);
+          if (diffTime < 24) {
+            leftStatus = `left ${diffTime} hours ago`;
           } else {
-            let diffTime = Math.ceil(leftTime / miliSecondOfHour);
-            if (diffTime < 24) {
-              leftStatus = `left ${diffTime} hours ago`;
+            let diffTime = Math.ceil(leftTime / miliSecondOfDay);
+            if (diffTime < 30) {
+              leftStatus = `left ${diffTime} days ago`;
             } else {
-              let diffTime = Math.ceil(leftTime / miliSecondOfDay);
-              if (diffTime < 30) {
-                leftStatus = `left ${diffTime} days ago`;
-              } else {
-                const leftDay = new Date(props.users[0].value.leftTime);
-                leftStatus = `offline since ${leftDay.getMonth()}/${leftDay.getDay()}`;
-              }
+              const leftDay = new Date(props.users[0].value.leftTime);
+              leftStatus = `offline since ${leftDay.getMonth()}/${leftDay.getDay()}`;
             }
           }
-          props.firebase.set(`/users/${user.key}/online`, leftStatus);
         }
+        props.firebase.set(`/users/${user.key}/online`, leftStatus);
       });
     }
   })

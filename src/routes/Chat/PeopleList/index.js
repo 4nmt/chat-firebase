@@ -1,22 +1,29 @@
-import React, { Component } from "react";
-import "./PeopleList.scss";
+import React from "react";
+import "../index";
 
-const PeopleList = ({ auth, startChat, users }) => {
-  users = users.filter(user => user.key !== auth.uid);
-  console.log(users);
+// import "./PeopleList.scss";
 
-  users = users.sort(
-    (a, b) => b.value.closestChatTime - a.value.closestChatTime
-  );
-
+const PeopleList = ({ searchUsers, startChat, users, filterUsers }) => {
+  let input = "";
   return (
     <div className="people-list" id="people-list">
       <div className="search">
-        <input type="text" placeholder="search" />
+        <input
+          type="text"
+          placeholder="search"
+          ref={node => (input = node)}
+          onChange={() => searchUsers(users, input.value)}
+        />
         <i className="fa fa-search" />
       </div>
       <ul className="list">
-        {users.map((data, i) => {
+        {filterUsers.map((data, i) => {
+          const iconStatus =
+            data.value.onClick === "online" ? (
+              <i className="fa fa-circle online" />
+            ) : (
+              <i className="fa fa-circle offline" />
+            );
           return (
             <li
               className="clearfix"
@@ -27,7 +34,7 @@ const PeopleList = ({ auth, startChat, users }) => {
               <div className="about" style={{ marin: "0px" }}>
                 <div className="name">{data.value.displayName}</div>
                 <div className="status">
-                  <i className="fa fa-circle online" /> {data.value.online}
+                  {iconStatus} {data.value.online}
                 </div>
               </div>
             </li>

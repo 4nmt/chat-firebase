@@ -4,6 +4,7 @@ import Chat from "../Chat";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 const HomePage = (...props) => {
+  props[0].setOnlineStatus();
   return (
     <React.Fragment>
       <CssBaseline />
