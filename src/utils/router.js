@@ -1,12 +1,10 @@
-import React, { Component } from "react";
 import { connectedRouterRedirect } from "redux-auth-wrapper/history4/redirect";
 import locationHelperBuilder from "redux-auth-wrapper/history4/locationHelper";
 import history from "../browserHistory";
-import { LIST_PATH } from "../constants";
 import LoadingSpinner from "../routes/LoadingSpinner";
 
 const AUTHED_REDIRECT = "AUTHED_REDIRECT";
-const UNAUTHED_REDIRECT = "UNAUTHED_REDIRECT";
+// const UNAUTHED_REDIRECT = "UNAUTHED_REDIRECT";
 
 const locationHelper = locationHelperBuilder({});
 /**

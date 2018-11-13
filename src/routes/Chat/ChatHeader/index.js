@@ -1,20 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 // import "./ChatHeader.scss";
 import "../index.scss";
 
-const ChatHeader = ({ auth, users, stars, yourUID, starUsers, iconStatus }) => {
+const ChatHeader = ({ auth, users, stars, yourUID, starUsers }) => {
   const user = users.find(user => user.key === yourUID);
-  console.log(stars);
-
   const userIsStared = stars.find(star => star.key === yourUID);
-  let userStar = { iconStatus: false };
+  let userStar;
   if (userIsStared) {
-    console.log(userIsStared);
     userStar = Object.values(userIsStared.value).find(
       val => val.from === auth.uid
     );
-    console.log(userStar);
   }
+  if (!userStar) userStar = { iconStatus: false };
   return (
     <div className="chat-header clearfix">
       <img src={user.value.avatarUrl} alt="avatar" />

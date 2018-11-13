@@ -19,7 +19,7 @@ const PeopleList = ({ searchUsers, startChat, users, filterUsers }) => {
       <ul className="list">
         {filterUsers.map((data, i) => {
           const iconStatus =
-            data.value.onClick === "online" ? (
+            data.value.online === "online" ? (
               <i className="fa fa-circle online" />
             ) : (
               <i className="fa fa-circle offline" />

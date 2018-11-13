@@ -36,10 +36,6 @@ export default compose(
       props.firebase.set(`/users/${props.auth.uid}/leftTime`, currentTime);
       props.history.push("/");
     }
-    //   goToAccount: props => () => {
-    //     props.router.push("/");
-    //     props.closeAccountMenu();
-    //   }
   }),
   withProps(({ auth, profile }) => ({
     authExists: isLoaded(auth) && !isEmpty(auth)

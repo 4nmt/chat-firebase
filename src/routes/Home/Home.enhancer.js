@@ -14,20 +14,46 @@ export default compose(
     };
   }),
   spinnerWhileLoading(["users", "messages", "stars", "auth"]),
-  withProps(({ users, auth }) => ({
-    users: users
+  withProps(({ users, auth, stars }) => {
+    const peoplePriority = stars.filter(star => {
+      return Object.values(star.value).some(val => {
+        return val.from === auth.uid;
+      });
+    });
+
+    const userPriority = users.filter(user => {
+      return peoplePriority.some(val => val.key === user.key);
+    });
+
+    let userList = users.filter(user => {
+      return !userPriority.includes(user);
+    });
+
+    userList = userList
       .filter(user => user.key !== auth.uid)
-      .sort((a, b) => b.value.closestChatTime - a.value.closestChatTime)
-  })),
+      .sort((a, b) => b.value.closestChatTime - a.value.closestChatTime);
+
+    return {
+      users: [...userPriority, ...userList]
+    };
+  }),
 
   withStateHandlers(
     // Setup initial state
-    ({ initYourUID = "", users, iconStatus = false }) => {
-      if (users[0].key) initYourUID = users[0].key;
+    ({
+      initYourUID = "",
+      users,
+      iconStatus = false,
+      file,
+      imagePreviewUrl = ""
+    }) => {
+      if (users && users.length > 0 && users[0].key) initYourUID = users[0].key;
       return {
         yourUID: initYourUID,
         filterUsers: users,
-        iconStatus: iconStatus
+        iconStatus: iconStatus,
+        imagePreviewUrl: imagePreviewUrl,
+        file: file
       };
     },
     {
@@ -35,30 +61,35 @@ export default compose(
         yourUID: yourUID,
         iconStatus: iconStatus
       }),
+
       searchUsers: ({ filterUsers }) => (users, name) => {
         return {
           filterUsers: users.filter(user =>
             user.value.displayName.toLowerCase().includes(name.toLowerCase())
           )
         };
+      },
+
+      onFilesDrop: ({ imagePreviewUrl, file }) => files => {
+        return {
+          file: files[0],
+          imagePreviewUrl: URL.createObjectURL(files[0])
+        };
       }
-      // starUsers: ({ iconStatus }) => (iconStatus, yourUID) => {
-      //   return {
-      //     iconStatus: iconStatus
-      //   };
-      // }
     }
   ),
   withHandlers({
-    sendMessages: props => message => {
+    sendMessages: props => (message, type) => {
       props.firebase.push(`/messages/${props.auth.uid}/${props.yourUID}`, {
         from: props.auth.uid,
-        message: message
+        message: message,
+        type: type
       });
 
       props.firebase.push(`/messages/${props.yourUID}/${props.auth.uid}`, {
         from: props.auth.uid,
-        message: message
+        message: message,
+        type: type
       });
 
       const currentTime = new Date();

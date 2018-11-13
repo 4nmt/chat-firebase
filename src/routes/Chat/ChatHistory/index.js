@@ -16,6 +16,11 @@ class ChatHistory extends Component {
 
     let ChatList = messageList.map((msgDetails, i) => {
       if (msgDetails.from === auth.uid) {
+        let image;
+        if (checkURL(msgDetails.message) || msgDetails.type === "image") {
+          image = <img src={msgDetails.message} alt="images" />;
+        }
+
         return (
           <li className="clearfix">
             <div className="message-data align-right">
@@ -24,9 +29,15 @@ class ChatHistory extends Component {
               <span className="message-data-name">{auth.displayName}</span>{" "}
               <i className="fa fa-circle me" />
             </div>
-            <div className="message other-message float-right">
-              {msgDetails.message}
-            </div>
+
+            {image ? (
+              image
+            ) : (
+              <div className="message other-message float-right">
+                {" "}
+                {msgDetails.message}{" "}
+              </div>
+            )}
           </li>
         );
       } else {
@@ -52,5 +63,9 @@ class ChatHistory extends Component {
     );
   }
 }
+
+const checkURL = url => {
+  return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+};
 
 export default ChatHistory;

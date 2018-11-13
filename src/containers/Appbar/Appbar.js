@@ -11,7 +11,8 @@ import Menu from "@material-ui/core/Menu";
 
 const styles = theme => ({
   root: {
-    width: "100%"
+    width: "100%",
+    background: "#222f3e !important"
   },
   grow: {
     flexGrow: 1
@@ -46,7 +47,6 @@ class NavBar extends React.Component {
 
   render() {
     const { classes, auth, handleLogout } = this.props;
-    // console.log(this.props);
 
     const { anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
@@ -59,14 +59,14 @@ class NavBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+        {/* <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem> */}
         <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
       </Menu>
     );
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" style={{ background: "#2c3e50" }}>
           <Toolbar>
             <Typography variant="h4" color="inherit" className={classes.grow}>
               iChat
@@ -83,10 +83,14 @@ class NavBar extends React.Component {
                   <img
                     src={auth.photoURL}
                     alt={auth.displayName}
-                    style={{ width: "40px", borderRadius: "50%" }}
+                    style={{
+                      width: "40px",
+                      borderRadius: "50%",
+                      marginRight: "20px"
+                    }}
                   />
                 ) : (
-                  <AccountCircle />
+                  <AccountCircle style={{ marginRight: "10px" }} />
                 )}
                 {auth.displayName}
               </IconButton>
