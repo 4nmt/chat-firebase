@@ -15,6 +15,21 @@ export const FirebaseConfig = {
   messagingSenderId: "1086217748217"
 };
 
+export const configMetadata = {
+  fileMetadataFactory: uploadRes => {
+    // upload response from Firebase's storage upload
+    const {
+      metadata: { name, fullPath, downloadURLs }
+    } = uploadRes;
+    // default factory includes name, fullPath, downloadURL
+    return {
+      name,
+      fullPath,
+      downloadURL: downloadURLs[0]
+    };
+  }
+};
+
 // Config for react-redux-firebase
 // For more details, visit http://docs.react-redux-firebase.com/history/v2.0.0/docs/api/enhancer.html
 export const reduxFirebase = {

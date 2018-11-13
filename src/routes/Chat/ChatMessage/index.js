@@ -2,7 +2,13 @@ import React from "react";
 import "../index.scss";
 import Dropzone from "react-dropzone";
 
-const ChatMessage = ({ sendMessages, onFilesDrop, file, imagePreviewUrl }) => {
+const ChatMessage = ({
+  sendMessages,
+  onFilesDrop,
+  file,
+  imagePreviewUrl,
+  clearImage
+}) => {
   let input = "";
   return (
     <div className="chat-message clearfix">
@@ -30,18 +36,22 @@ const ChatMessage = ({ sendMessages, onFilesDrop, file, imagePreviewUrl }) => {
         <i className="far fa-file-image fa-lg" />{" "}
       </Dropzone>
       <button
-        onClick={() => {
+        onClick={async () => {
           if (imagePreviewUrl !== "") {
-            let reader = new FileReader();
-            reader.onloadend = () => {
-              console.log(reader.result);
-              sendMessages(reader.result, "image");
-            };
-
-            reader.readAsDataURL(file);
+            sendMessages(file, "image");
+            clearImage();
           } else {
-            sendMessages(input.value, "text");
-            input.value = "";
+            var img = new Image();
+            img.onload = () => {
+              alert("aa");
+              sendMessages(input.value, "image");
+            };
+            img.onerror = () => {
+              alert("aa");
+
+              sendMessages(input.value, "text");
+            };
+            img.src = input.value;
           }
         }}
       >
@@ -50,5 +60,28 @@ const ChatMessage = ({ sendMessages, onFilesDrop, file, imagePreviewUrl }) => {
     </div>
   );
 };
+
+// function checkURL(url) {
+//   return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+// }
+
+// function imageExists(image_url) {
+//   var http = new XMLHttpRequest();
+
+//   http.open("HEAD", image_url, false);
+//   http.send();
+
+//   return http.status !== 404;
+// }
+// const checkImage = imageSrc => {
+//   var img = new Image();
+//   img.onload = () => {
+//     return true;
+//   };
+//   img.onerror = () => {
+//     return false;
+//   };
+//   img.src = imageSrc;
+// };
 
 export default ChatMessage;

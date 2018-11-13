@@ -75,20 +75,39 @@ export default compose(
           file: files[0],
           imagePreviewUrl: URL.createObjectURL(files[0])
         };
+      },
+
+      clearImage: ({ imagePreviewUrl, file }) => () => {
+        return {
+          file: null,
+          imagePreviewUrl: ""
+        };
       }
     }
   ),
   withHandlers({
-    sendMessages: props => (message, type) => {
+    sendMessages: props => async (message, type) => {
+      let imageLink;
+      if (type === "image" && typeof message !== "string") {
+        const storageRef = props.firebase.storage().ref();
+        const fileRef = storageRef.child("messages_images/" + message.name);
+        const snap = await fileRef.put(message, {
+          contentType: message.type
+        });
+
+        imageLink = await snap.ref.getDownloadURL();
+        console.log(imageLink);
+      }
+
       props.firebase.push(`/messages/${props.auth.uid}/${props.yourUID}`, {
         from: props.auth.uid,
-        message: message,
+        message: imageLink ? imageLink : message,
         type: type
       });
 
       props.firebase.push(`/messages/${props.yourUID}/${props.auth.uid}`, {
         from: props.auth.uid,
-        message: message,
+        message: imageLink ? imageLink : message,
         type: type
       });
 
